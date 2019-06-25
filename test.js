@@ -4,19 +4,17 @@ const puppeteer = require('puppeteer');
     const browser = await puppeteer.launch();
 
 
-        page = await browser.newPage();
-        await page.goto('https://coengadvisors.net', {waitUntil: 'load'});
-        await page.type('input[id=email]', 'rea-test-1@coengadvisors.com', {delay: 20});
-        await page.type('input[id=password]', 'rea-test', {delay: 20});
-        await page.$eval( '', form => form.click() );
+    await page.goto('https://coengadvisors.net');
 
-    const newPage = await page.evaluate(() => {
+    await page.type('#email', 'rea-test-1@coengadvisors.com');
+    await page.type('#password', 'rea-test');
 
-        return  document.body.innerHTML;
+    await page.click('#submit');
 
-        });
+    await page.waitForNavigation();
 
-     console.log(page);
+    console.log('New Page URL:', page.url());
+
      console.log("end");
 
   })();
