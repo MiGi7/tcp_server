@@ -21,7 +21,12 @@ int main(int argc, char *argv[]){
           break;
         }
       }
-      for (char x : buffer){
+      int k = 0;
+     for (char x : buffer){
           std::cout << x;
+          ++k;
+          if (k == i){
+            break;
+          }
       }
 }
