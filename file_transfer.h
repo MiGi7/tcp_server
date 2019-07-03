@@ -14,7 +14,9 @@ public:
   int bytes;
   bool end;
 
-  Packet(char buffer[4096], int bytes  bool end=false);
+  Packet(char buf[4096], int bytes, bool end=false);
+
+  void printBytes();
 };
 
 class File {
@@ -23,16 +25,15 @@ public:
   int total_bytes;
   int total_packets;
   const std::string file_name;
-
   File(std::string filename);
 
   int pushPacket(Packet packet);
 
-  int fileToBinary();
+  int fileToPackets(std::string file_name);
 
-  int binaryToFile(std::string file_name);
+  void packetsToFile(std::string file_name);
   //bool check();
-
-}
+  void printPackets();
+};
 
 #endif
