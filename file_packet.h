@@ -3,8 +3,8 @@
 #include <fstream>
 #include <vector>
 
-#ifndef file_transfer_H
-#define file_transfer_H
+#ifndef file_packet_H
+#define file_packet_H
 
 //class designed for single packages of data sent via tcp
 //4095 bytes are sent to reduce data loss
@@ -25,6 +25,7 @@ public:
   int total_bytes;
   int total_packets;
   const std::string file_name;
+  File(std::string file_name, int bytes);
   File(std::string filename);
 
   int pushPacket(Packet packet);
