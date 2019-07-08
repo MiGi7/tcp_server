@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <string>
+#include "file_packet.h"
 
 #ifndef new_client_H
 #define new_client_H
@@ -20,6 +21,9 @@ public:
 
   Client(std::string ip_address, int port);
 
+  int clientConnect();
+
+  int sendFile(File file);
 
 };
 

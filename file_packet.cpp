@@ -86,15 +86,10 @@ void File::packetsToFile(const std::string file_name){
   file.close();
 }
 
-int main(int argc, char *argv[]){
-  const std::string file_name = argv[1];
-  File a_file(file_name);
-  //a_file.printPackets();
-  const std::string new_name = argv[2];
-  a_file.packetsToFile(new_name);
-  //char array[4096] = {'a', 'b', 'c'};
-  //Packet p(array, 3, false);
-  //p.printBytes();
-  //std::cout << a_file.total_bytes << std::endl;
-  return 1;
+Packet File::returnPacket(int num){
+  if (num >= total_packets){
+    std::cout << "The num variable is outside the total packet size" << std::endl;
+    return null;
+  }
+  return packets[num];
 }

@@ -35,6 +35,8 @@ public:
   void packetsToFile(std::string file_name);
   //bool check();
   void printPackets();
+
+  Packet returnPacket(int num);
 };
 
 #endif
