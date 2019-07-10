@@ -8,6 +8,7 @@
 #include <string.h>
 #include <string>
 #include "file_packet.h"
+#include "file_packet.cpp"
 
 Client::Client(std::string ip_address, int port){
   ip_address = ip_address;
@@ -23,6 +24,7 @@ int Client::clientConnect(){
   int connectRes = connect (sock, (sockaddr*)&hint, sizeof(hint));
   if (connectRes == -1){
     std::cout << "Connection Failed" << std::endl;
+    exit(1);
     return 0;
   } else {
     std::cout << "Connection Established" << std::endl;
@@ -33,26 +35,34 @@ int Client::clientConnect(){
 int Client::sendFile(File file){
   char data_buf[25];
   char buf[4096];
-  char bytes[15] = itoa(file.total_bytes);
-  char total_packets[10] = itoa(file.total_packets);
+  //char bytes[15] = itoa(file.total_bytes);
+  //char total_packets[10] = itoa(file.total_packets);
   int counter = 0;
+  int buf_counter = 0;
   int packets = file.total_packets;
   while(true){
     if (packets >= counter){
       std::cout << "All file packets have been sent" << std::endl;
       break;
     }
-    int sendRes = send(sock, file.returnPacket(counter).buffer, buf.size() + 1, 0);
+    for (char element : file.returnPacket(counter).buffer){
+      buf[buf_counter] = element;
+      ++buf_counter;
+    }
+    buf_counter = 0;
+    int sendRes = send(sock, buf, 4096+1, 0);
+    memset(buf, 0, 4096);
   }
+  return 0;
 }
 
 int main(int argc, char *argv[]){
   const std::string ip_address = argv[1];
   const std::string string_port = argv[2];
-  const std::string file_name = argv[3];
+  File file("README.md");
   int port = std::stoi(string_port);
   Client pi(ip_address, port);
   std::cout << pi.clientConnect() << std::endl;
-  getline(std::cin, userInput);
+  pi.sendFile(file);
   return 0;
 }

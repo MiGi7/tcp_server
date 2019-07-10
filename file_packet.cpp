@@ -26,10 +26,10 @@ void Packet::printBytes(){
 
 //need to define function so that a file_name will create the File object containing all packets
 
-File::File(std::string file_name, int bytes){
+/*File::File(std::string file_name, int bytes){
   file_name = file_name;
   total_bytes = bytes;
-}
+}*/
 
 File::File(std::string file_name){
   file_name = file_name;
@@ -89,7 +89,6 @@ void File::packetsToFile(const std::string file_name){
 Packet File::returnPacket(int num){
   if (num >= total_packets){
     std::cout << "The num variable is outside the total packet size" << std::endl;
-    return null;
   }
   return packets[num];
 }
