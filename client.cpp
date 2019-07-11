@@ -19,7 +19,7 @@ int main() {
   }
 
   int port = 8080;
-  std::string ipAddress = "10.0.0.6";
+  std::string ipAddress = "192.168.0.67";
 
   sockaddr_in hint;
   hint.sin_family = AF_INET;

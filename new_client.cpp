@@ -32,9 +32,13 @@ int Client::clientConnect(){
   }
 }
 
+//Error sending of the buffer. Need to pass a *char array into send();
+//Need to mimic what c_str() does without modifying the array
+
 int Client::sendFile(File file){
   char data_buf[25];
   char buf[4096];
+  char* msg = "Hello!";
   //char bytes[15] = itoa(file.total_bytes);
   //char total_packets[10] = itoa(file.total_packets);
   int counter = 0;
@@ -50,7 +54,7 @@ int Client::sendFile(File file){
       ++buf_counter;
     }
     buf_counter = 0;
-    int sendRes = send(sock, buf, 4096+1, 0);
+    int sendRes = send(sock, msg, sizeof(msg), 0);
     memset(buf, 0, 4096);
   }
   return 0;

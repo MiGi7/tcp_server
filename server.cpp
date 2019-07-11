@@ -73,7 +73,7 @@ int main(){
       std::cout << "The client disconnected";
       break;
     }
-    std::cout << "Received: " << std::string(buf, 0, bytesRecv) << std::endl;
+    std::cout << "Received: " << (buf, 0, bytesRecv) << std::endl;
 
     send(clientSocket, buf, bytesRecv + 1, 0);
   }
