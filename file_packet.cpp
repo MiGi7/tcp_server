@@ -33,6 +33,7 @@ void Packet::printBytes(){
 
 File::File(std::string file_name){
   file_name = file_name;
+  total_packets = 0;
   total_bytes = this->fileToPackets(file_name);
 }
 
@@ -54,13 +55,15 @@ int File::fileToPackets(const std::string file_name){
     buffer[counter] = byte;
     ++counter;
     ++byte_num;
-    if(counter == 4095){
+    if(counter == 4096){
       this->pushPacket(Packet(buffer, counter, false));
       counter = 0;
       buffer[4096];
+      ++this->total_packets;
     }
   }
   this->pushPacket(Packet(buffer, counter - 1, true));
+  ++this->total_packets;
   return byte_num - 1;
 }
 

@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <string>
+#include <stdlib.h>
 #include "file_packet.h"
 #include "file_packet.cpp"
 
@@ -38,24 +39,31 @@ int Client::clientConnect(){
 int Client::sendFile(File file){
   char data_buf[25];
   char buf[4096];
-  char* msg = "Hello!";
   //char bytes[15] = itoa(file.total_bytes);
   //char total_packets[10] = itoa(file.total_packets);
   int counter = 0;
   int buf_counter = 0;
   int packets = file.total_packets;
+  int bytes = file.total_bytes;
+  std::cout << bytes/file.total_bytes << std::endl;
   while(true){
-    if (packets >= counter){
+    memset(buf, 0, 4096);
+    if (packets <= counter){
       std::cout << "All file packets have been sent" << std::endl;
       break;
     }
     for (char element : file.returnPacket(counter).buffer){
+      if (bytes == 0){
+        break;
+      }
       buf[buf_counter] = element;
       ++buf_counter;
+      --bytes;
     }
+    std::cout << bytes/file.total_bytes << std::endl;
+    int sendRes = send(sock, buf, buf_counter, 0);
     buf_counter = 0;
-    int sendRes = send(sock, msg, sizeof(msg), 0);
-    memset(buf, 0, 4096);
+    ++counter;
   }
   return 0;
 }
@@ -63,10 +71,11 @@ int Client::sendFile(File file){
 int main(int argc, char *argv[]){
   const std::string ip_address = argv[1];
   const std::string string_port = argv[2];
-  File file("README.md");
+  File file("atom-amd64 (2).deb");
+  int packets = file.total_packets;
   int port = std::stoi(string_port);
   Client pi(ip_address, port);
-  std::cout << pi.clientConnect() << std::endl;
+  pi.clientConnect();
   pi.sendFile(file);
   return 0;
 }

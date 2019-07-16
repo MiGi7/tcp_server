@@ -58,25 +58,27 @@ int main(){
     inet_ntop(AF_INET, &client.sin_addr, host, NI_MAXHOST);
     std::cout << "Connected (cannot get name)" << std::endl;
   }
-
+  int bytes = 0;
+  int packets = 0;
   char buf[4096];
   while (true){
     //Clear buffer
     memset(buf, 0, 4096);
     //wait for message
     int bytesRecv = recv(clientSocket, buf, 4096, 0);
+    bytes = bytes + bytesRecv;
     if (bytesRecv == -1) {
-      std::cerr << "There was a connection issue";
+      std::cerr << "There was a connection issue" << std::endl;
       break;
     }
     if (bytesRecv == 0 ){
-      std::cout << "The client disconnected";
+      std::cout << "The client disconnected" << std::endl;
       break;
     }
-    std::cout << "Received: " << (buf, 0, bytesRecv) << std::endl;
-
-    send(clientSocket, buf, bytesRecv + 1, 0);
+    ++packets;
   }
+  std::cout << bytes << std::endl;
+  std::cout << packets << std::endl;
   close(clientSocket);
 
   //close the socket
