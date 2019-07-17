@@ -45,7 +45,7 @@ int Client::sendFile(File file){
   int buf_counter = 0;
   int packets = file.total_packets;
   int bytes = file.total_bytes;
-  std::cout << bytes/file.total_bytes << std::endl;
+  std::cout << bytes << std::endl;
   while(true){
     memset(buf, 0, 4096);
     if (packets <= counter){
@@ -60,7 +60,6 @@ int Client::sendFile(File file){
       ++buf_counter;
       --bytes;
     }
-    std::cout << bytes/file.total_bytes << std::endl;
     int sendRes = send(sock, buf, buf_counter, 0);
     buf_counter = 0;
     ++counter;
@@ -71,7 +70,7 @@ int Client::sendFile(File file){
 int main(int argc, char *argv[]){
   const std::string ip_address = argv[1];
   const std::string string_port = argv[2];
-  File file("atom-amd64 (2).deb");
+  File file("old_connect.o");
   int packets = file.total_packets;
   int port = std::stoi(string_port);
   Client pi(ip_address, port);

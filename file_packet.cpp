@@ -6,7 +6,8 @@
 #include <string.h>
 
 Packet::Packet(char buf[4096], int size, bool end){
-  for (int counter = 0; counter < size; ++counter){
+  int counter;
+  for (counter = 0; counter < size; ++counter){
     buffer[counter] = buf[counter];
   }
   bytes = size;
@@ -26,10 +27,10 @@ void Packet::printBytes(){
 
 //need to define function so that a file_name will create the File object containing all packets
 
-/*File::File(std::string file_name, int bytes){
+File::File(std::string file_name, int bytes){
   file_name = file_name;
   total_bytes = bytes;
-}*/
+}
 
 File::File(std::string file_name){
   file_name = file_name;
@@ -39,9 +40,8 @@ File::File(std::string file_name){
 
 //need to push packet onto the back of the vector array so
 //that the end packet is at the back
-int File::pushPacket(Packet packet){
+void File::pushPacket(Packet packet){
   packets.push_back(packet);
-  return 1;
 }
 
 int File::fileToPackets(const std::string file_name){
@@ -79,6 +79,7 @@ void File::packetsToFile(const std::string file_name){
   for (Packet element : packets){
     for (char character : element.buffer){
       if (counter == element.bytes){
+        std::cout << counter << std::endl;
         counter = 0;
         break;
       }

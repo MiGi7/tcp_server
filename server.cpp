@@ -6,7 +6,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <string>
-
+#include "file_packet.h"
+#include "file_packet.cpp"
 
 int main(){
   //Create a socket
@@ -61,11 +62,12 @@ int main(){
   int bytes = 0;
   int packets = 0;
   char buf[4096];
+  File file("tester.o", 18784);
   while (true){
     //Clear buffer
-    memset(buf, 0, 4096);
     //wait for message
     int bytesRecv = recv(clientSocket, buf, 4096, 0);
+    Packet packet(buf, bytesRecv, false);
     bytes = bytes + bytesRecv;
     if (bytesRecv == -1) {
       std::cerr << "There was a connection issue" << std::endl;
@@ -76,9 +78,12 @@ int main(){
       break;
     }
     ++packets;
+    file.pushPacket(packet);
   }
-  std::cout << bytes << std::endl;
+  file.packetsToFile("tester.o");
   std::cout << packets << std::endl;
+  std::cout << bytes << std::endl;
+
   close(clientSocket);
 
   //close the socket

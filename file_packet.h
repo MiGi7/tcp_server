@@ -28,7 +28,7 @@ public:
   File(std::string file_name, int bytes);
   File(std::string filename);
 
-  int pushPacket(Packet packet);
+  void pushPacket(Packet packet);
 
   int fileToPackets(std::string file_name);
 
