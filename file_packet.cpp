@@ -77,6 +77,7 @@ void File::packetsToFile(const std::string file_name){
   file.open(file_name, std::ios::binary);
   int counter = 0;
   for (Packet element : packets){
+    int counter = 0;
     for (char character : element.buffer){
       if (counter == element.bytes){
         std::cout << counter << std::endl;

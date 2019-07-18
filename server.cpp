@@ -21,7 +21,7 @@ int main(){
   sockaddr_in hint;
   hint.sin_family = AF_INET;
   hint.sin_port = htons(8080); //port is here
-  inet_pton(AF_INET, "192.168.0.67", (sockaddr*)&hint.sin_addr); //connects a number to an array of integers.
+  inet_pton(AF_INET, "10.0.0.4", (sockaddr*)&hint.sin_addr); //connects a number to an array of integers.
 
   if (bind(listening, (sockaddr*)&hint, sizeof(hint)) == -1){
     std::cerr << "Cannot bind to IP/Port";

@@ -70,7 +70,7 @@ int Client::sendFile(File file){
 int main(int argc, char *argv[]){
   const std::string ip_address = argv[1];
   const std::string string_port = argv[2];
-  File file("old_connect.o");
+  File file("README.md");
   int packets = file.total_packets;
   int port = std::stoi(string_port);
   Client pi(ip_address, port);
